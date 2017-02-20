@@ -26,6 +26,9 @@ public class MaxMapper
         String dayMonth = day + '-' + month;
         String stationDayMonth = station + '-' + dayMonth;
 
+        // alternatively, get full date
+        String date = line.substring(15,23);
+        String stationDate = station + '\t' + date;
         // get the temperature value, guarding against missing values
         int airTemperature;
         if (line.charAt(87) == '+') { // parseInt doesn't like leading plus signs
@@ -37,7 +40,7 @@ public class MaxMapper
         // write the data out, and pass to reduce
         String quality = line.substring(92, 93);
         if (airTemperature != MISSING && quality.matches("[01459]")) {
-            context.write(new Text(stationDayMonth), new IntWritable(airTemperature));
+            context.write(new Text(stationDate), new IntWritable(airTemperature));
         }
 
         /** Previous version
