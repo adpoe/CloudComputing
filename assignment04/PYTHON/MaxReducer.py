@@ -1,8 +1,4 @@
-""" MaxReducer
-    CS1699 - Cloud Computing
-    Anthony Poerio
-    adp59@pitt.edu """
-
+#!/usr/bin/env python
 import sys
 
 def read_mapper_output(file, separator='\t'):
