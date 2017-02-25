@@ -1,0 +1,76 @@
+[admin3428@ip-172-31-38-183 ~]$ hadoop jar MaxWeather.jar com.company.MaxDriver ncdc_data MaxWeatherOut
+WARNING: Use "yarn jar" to launch YARN applications.
+17/02/25 20:41:07 INFO impl.TimelineClientImpl: Timeline service address: http://ip-172-31-13-154.ec2.internal:8188/ws/v1/timeline/
+17/02/25 20:41:07 INFO client.RMProxy: Connecting to ResourceManager at ip-172-31-53-48.ec2.internal/172.31.53.48:8050
+17/02/25 20:41:07 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+17/02/25 20:41:08 INFO input.FileInputFormat: Total input paths to process : 5
+17/02/25 20:41:08 INFO mapreduce.JobSubmitter: number of splits:5
+17/02/25 20:41:08 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1487164262936_19131
+17/02/25 20:41:08 INFO impl.YarnClientImpl: Submitted application application_1487164262936_19131
+17/02/25 20:41:08 INFO mapreduce.Job: The url to track the job: http://a.cloudxlab.com:8088/proxy/application_1487164262936_19131/
+17/02/25 20:41:08 INFO mapreduce.Job: Running job: job_1487164262936_19131
+17/02/25 20:41:14 INFO mapreduce.Job: Job job_1487164262936_19131 running in uber mode : false
+17/02/25 20:41:14 INFO mapreduce.Job:  map 0% reduce 0%
+17/02/25 20:41:20 INFO mapreduce.Job:  map 20% reduce 0%
+17/02/25 20:41:23 INFO mapreduce.Job:  map 40% reduce 0%
+17/02/25 20:41:24 INFO mapreduce.Job:  map 80% reduce 0%
+17/02/25 20:41:31 INFO mapreduce.Job:  map 100% reduce 0%
+17/02/25 20:41:33 INFO mapreduce.Job:  map 100% reduce 100%
+17/02/25 20:41:33 INFO mapreduce.Job: Job job_1487164262936_19131 completed successfully
+17/02/25 20:41:33 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=885147
+		FILE: Number of bytes written=2550953
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=4439673
+		HDFS: Number of bytes written=268580
+		HDFS: Number of read operations=18
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters
+		Launched map tasks=5
+		Launched reduce tasks=1
+		Data-local map tasks=5
+		Total time spent by all maps in occupied slots (ms)=55286
+		Total time spent by all reduces in occupied slots (ms)=11480
+		Total time spent by all map tasks (ms)=27643
+		Total time spent by all reduce tasks (ms)=5740
+		Total vcore-seconds taken by all map tasks=27643
+		Total vcore-seconds taken by all reduce tasks=5740
+		Total megabyte-seconds taken by all map tasks=42459648
+		Total megabyte-seconds taken by all reduce tasks=11755520
+	Map-Reduce Framework
+		Map input records=32827
+		Map output records=32783
+		Map output bytes=819575
+		Map output materialized bytes=885171
+		Input split bytes=675
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=10942
+		Reduce shuffle bytes=885171
+		Reduce input records=32783
+		Reduce output records=10942
+		Spilled Records=65566
+		Shuffled Maps =5
+		Failed Shuffles=0
+		Merged Map outputs=5
+		GC time elapsed (ms)=1723
+		CPU time spent (ms)=10960
+		Physical memory (bytes) snapshot=4281982976
+		Virtual memory (bytes) snapshot=19837906944
+		Total committed heap usage (bytes)=4034396160
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters
+		Bytes Read=4438998
+	File Output Format Counters
+		Bytes Written=268580
+[admin3428@ip-172-31-38-183 ~]$
