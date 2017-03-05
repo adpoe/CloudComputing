@@ -46,7 +46,7 @@ grp_car = GROUP df
 -- iterate through each grouping
 delay_counts = FOREACH grp_car {
      	only_delays = FILTER df
-                    BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
+                    BY (delay >= 15);
      	GENERATE group,
                COUNT(df) AS total_records,
                COUNT(only_delays) AS num_delays,

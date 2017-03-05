@@ -60,7 +60,7 @@ frequency_counts = foreach freq_table  -- get each row of table
 -- now order and dump for Users
 order_desc = ORDER frequency_counts
              BY $1 DESC;
-             
+
 TOP_20 = LIMIT order_desc 20;
 DUMP TOP_20
 /* results
