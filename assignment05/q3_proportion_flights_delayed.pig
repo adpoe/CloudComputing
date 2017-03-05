@@ -33,16 +33,32 @@ flights = LOAD '/Users/tony/Documents/_LEARNINGS/CLOUD/pig/flights' using CSVExc
      securityDelay:int,
      lateAircraftDelay:int);
 
--- project, to get rid of unused fields
-A = FOREACH flights GENERATE uniqueCarrier AS car,(int)(arrDelay) AS delay; -- use arrival delay to determine delays
+-- use arrival delay to determine delays
+-- and only take keys we are going to use, to save space + improve readability
+df = FOREACH flights
+     GENERATE uniqueCarrier AS car,
+              arrDelay AS delay;
 
--- group by carier
-B = GROUP A BY car;
+-- group by carrier
+grp_car = GROUP df
+          BY car;
 
-COUNT_TOTAL = FOREACH B {
-     	C = FILTER A BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
-     	GENERATE group, COUNT(A) AS tot, COUNT(C) AS del, (float) COUNT(C)/COUNT(A) AS frac;
+-- iterate through each grouping
+delay_counts = FOREACH grp_car {
+     	only_delays = FILTER df
+                    BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
+     	GENERATE group,
+               COUNT(df) AS total_records,
+               COUNT(only_delays) AS num_delays,
+               (float)COUNT(only_delays)/(float)COUNT(df) AS percentage; -- need a float, since we are doing division
 }
 
-only_fractions = FOREACH COUNT_TOTAL GENERATE group, frac;
-order_fractions = ORDER only_fractions BY frac ASC;
+-- pull out only the data we need
+only_pct= FOREACH delay_counts
+          GENERATE group, percentage;
+
+order_pct = ORDER only_pct
+            BY percentage ASC;
+
+-- dump for end user
+dump order_pct

@@ -34,12 +34,17 @@ flights = LOAD '/Users/tony/Documents/_LEARNINGS/CLOUD/pig/flights' using CSVExc
      lateAircraftDelay:int);
 
 -- group data by airport code
-origin_grps = GROUP flights BY origin;
+origin_grps = GROUP flights
+              BY origin;
 
 -- count num flights in groups
-grp_origin_counts = FOREACH origin_grps GENERATE group, COUNT(flights) as count_flights;
+grp_origin_counts = FOREACH origin_grps
+                    GENERATE group,
+                    COUNT(flights) as count_flights;
 
 -- dump outbound counts for user
-order_desc = ORDER grp_origin_counts BY count_flights DESC;
+order_desc = ORDER grp_origin_counts
+             BY count_flights DESC;
+
 TOP_20 = LIMIT order_desc 20;
 DUMP TOP_20

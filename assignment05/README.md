@@ -1,18 +1,23 @@
 # CS1699 - Cloud Computing
-## Assignment #04 - MeanMax Temperature in Java & Python, Run on a Cluster
+## Assignment #05 - PigLatin Scripts
 ### @author Anthony (Tony) Poerio (adp59@pitt.edu)
-### Due Date: February 28, 2017
+### Due Date: March 14, 2017
 
 In this directory please find:
-  1. Directory named: `_console_output` containing the my output from the console, when running each MapReduce job
-    * I've made subfolders for Java, and Python output, respectively
-  2. Screenshots, in the directory named `_screenshots`. I have screenshots separated by category:
-    * AWS Setup
-    * Java MapReduce job results
-    * Python MapReduce job results
-  3. Full dataset used, in the `dataset` directory
-  4.  **JAVA source code**,  in the `JAVA_SRC` directory
-  5.  **PYTHON source code**,  in the `PYTHON_SRC` directory
+  1. Three separate scripts for each part of Q1
+    * Inbound: `q1_top_20_inbound.pig`
+    * Outbound: `q1_top_20_outbound.pig`
+    * Total:  `q1_top_20_total.pig`
+  2. Script for Q2 named: `q2_carrier_popularity.pig`
+  3. Script for Q3 named: `q3_proportion_flights_delayed.pig`
+  4. Script for Q4 named: `q4_carrier_delays.pig`
+  5. Script for Q5 named: `q5_top_20_busy_routes.pig`
+
+**ALL SCRIPTS ASSUME**:
+  * Flight data is in CSV format
+  * All data is in a folder named `flights`
+  * I have my filepath to the data source listed currently, please change accordingly
+  * All scripts call a DUMP command at their end, to show result to the user.
 
   Thanks for your time,
   Tony

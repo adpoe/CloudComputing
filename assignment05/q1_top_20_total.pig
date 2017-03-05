@@ -34,19 +34,34 @@ flights = LOAD '/Users/tony/Documents/_LEARNINGS/CLOUD/pig/flights' using CSVExc
      lateAircraftDelay:int);
 
 -- group by airport code
-origin_grps = GROUP flights BY origin;
-dst_grps = GROUP flights BY dest;
+origin_grps = GROUP flights
+              BY origin;
+
+dst_grps = GROUP flights
+           BY dest;
 
 -- get total counts
-grp_origin_counts = FOREACH origin_grps GENERATE group, COUNT(flights) as count_flights;
-grp_dst_counts = FOREACH dst_grps GENERATE group, COUNT(flights) as count_flights;
+grp_origin_counts = FOREACH origin_grps
+                    GENERATE group,
+                             COUNT(flights) as count_flights;
+
+grp_dst_counts = FOREACH dst_grps
+                 GENERATE group,
+                          COUNT(flights) as count_flights;
+
 total_counts =  UNION grp_origin_counts, grp_dst_counts;
 
 -- perform a join and sum the groups in the result
-total_join = JOIN grp_origin_counts by group, grp_dst_counts by group;
-ts = FOREACH total_join generate grp_origin_counts::group, (grp_origin_counts::count_flights + grp_dst_counts::count_flights) as total_counts;
+total_join = JOIN grp_origin_counts by group,
+                  grp_dst_counts by group;
+
+ts = FOREACH total_join
+     GENERATE grp_origin_counts::group,
+              (grp_origin_counts::count_flights + grp_dst_counts::count_flights) as total_counts;
 
 -- dump total counts for user
-order_desc = ORDER ts BY total_counts DESC;
+order_desc = ORDER ts
+             BY total_counts DESC;
+
 TOP_20 = LIMIT order_desc 20;
 DUMP TOP_20

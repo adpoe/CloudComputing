@@ -36,18 +36,26 @@ flights = LOAD '/Users/tony/Documents/_LEARNINGS/CLOUD/pig/flights' using CSVExc
 
 -- pull out the data we're interested in: year and carrier
 -- we can get number of flights by counting instances of each uniqueCarrier
-yearly_volume_by_carrier = FOREACH flights GENERATE year AS year, uniqueCarrier AS carrier, year AS emit;
+yearly_volume_by_carrier = FOREACH flights
+                           GENERATE year AS year,
+                                    uniqueCarrier AS carrier,
+                                    year AS emit;
 
 -- group as a pivot-table like structure with data we need as indices
 -- and values being the counts of values we emitted --> year, which we know must be present
 -- and can therefore be used to count instances
-carrier_and_instances = GROUP yearly_volume_by_carrier BY (year, carrier);
-carrier_and_counts = FOREACH carrier_and_instances GENERATE FLATTEN(group) as (yr, car), COUNT(yearly_volume_by_carrier) as counts;
+carrier_and_instances = GROUP yearly_volume_by_carrier
+                        BY (year, carrier);
+
+carrier_and_counts = FOREACH carrier_and_instances
+                     GENERATE FLATTEN(group) as (yr, car),
+                              COUNT(yearly_volume_by_carrier) as counts;
 
 
 -- now, find YoY growth
 -- grab our data out of the bag
-data = FOREACH carrier_and_counts GENERATE $0, $1, $2;
+data = FOREACH carrier_and_counts
+       GENERATE $0, $1, $2;
 
 base_cols = foreach data
             generate

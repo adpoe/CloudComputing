@@ -36,15 +36,16 @@ flights = LOAD '/Users/tony/Documents/_LEARNINGS/CLOUD/pig/flights' using CSVExc
 
 -- taking suggestion of prompt --> use frequency table (i,j)
 filtered_dataset = foreach flights
-                   generate
-                      origin as i,
-                      dest as j;
+                   generate origin as i,
+                            dest as j;
 
-freq_table = group filtered_dataset by (i,j);
+freq_table = group filtered_dataset
+             by (i,j);
 
 -- and just count the values in frequency table
 frequency_counts = foreach freq_table  -- get each row of table
-                   generate group, COUNT(filtered_dataset); -- count bags present
+                   generate group,
+                            COUNT(filtered_dataset); -- count bags present
 /* results
 ...
 ((MDW,LIT),1478)
@@ -57,7 +58,9 @@ frequency_counts = foreach freq_table  -- get each row of table
 */
 
 -- now order and dump for Users
-order_desc = ORDER frequency_counts BY $1 DESC;
+order_desc = ORDER frequency_counts
+             BY $1 DESC;
+             
 TOP_20 = LIMIT order_desc 20;
 DUMP TOP_20
 /* results

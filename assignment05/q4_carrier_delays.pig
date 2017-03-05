@@ -36,19 +36,32 @@ flights = LOAD '/Users/tony/Documents/_LEARNINGS/CLOUD/pig/flights' using CSVExc
 
 ------ Re-use Code from Q3 // Arrival Delays -------
 -- project, to get rid of unused fields
-A = FOREACH flights GENERATE uniqueCarrier AS car, (int)(arrDelay) AS delay; -- use arrival delay to determine delays
+-- use arrival delay to determine delays
+-- and only take keys we are going to use, to save space + improve readability
+df = FOREACH flights
+     GENERATE uniqueCarrier AS car,
+              arrDelay AS delay;
 
--- group by carier
-B = GROUP A BY car;
+-- group by carrier
+grp_car = GROUP df BY car;
 
-COUNT_TOTAL = FOREACH B {
-     	C = FILTER A BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
-     	GENERATE group, COUNT(A) AS tot, COUNT(C) AS del, (float) COUNT(C)/COUNT(A) AS arr_frac;
+-- iterate through each grouping
+delay_counts = FOREACH grp_car {
+     	only_delays = FILTER df
+                    BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
+     	GENERATE group,
+               COUNT(df) AS total_records,
+               COUNT(only_delays) AS num_delays,
+               (float)COUNT(only_delays)/(float)COUNT(df) AS percentage; -- need a float, since we are doing division
 }
 
--- sort for output
-only_fractions = FOREACH COUNT_TOTAL GENERATE group, arr_frac;
-order_fractions_arrival_delay = ORDER only_fractions BY arr_frac ASC;
+-- pull out only the data we need
+only_pct= FOREACH delay_counts
+          GENERATE group, percentage;
+
+order_pct_arrivals = ORDER only_pct
+                     BY percentage ASC;
+
 ---------------- END ARRIVAL DELAYS ------------------
 /* results -->
 (UniqueCarrier,0.0)
@@ -76,53 +89,41 @@ order_fractions_arrival_delay = ORDER only_fractions BY arr_frac ASC;
 (B6,0.26485085)
 (EV,0.2776003)
 */
-
-
 ------- New Code // Carrier Delays ---------------------
 -- instead of calculating arrDelay itself, find the number caused carrier delays
-A = FOREACH flights GENERATE uniqueCarrier AS carrier,(int)(carrierDelay) AS delay;
+-- use arrival delay to determine delays
+-- and only take keys we are going to use, to save space + improve readability
+df = FOREACH flights
+     GENERATE uniqueCarrier AS car,
+              carrierDelay AS delay;
 
 -- group by carrier
-B = GROUP A BY carrier;
-COUNT_TOTAL = FOREACH B {
-	C = FILTER A BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
-	GENERATE group, COUNT(A) AS tot, COUNT(C) AS del, (float) COUNT(C)/COUNT(A) AS cr_frac;
+grp_car = GROUP df BY car;
+
+-- iterate through each grouping
+delay_counts = FOREACH grp_car {
+     	only_delays = FILTER df
+                    BY (delay >= 15); -- only keep tuples with a delay >= than 15 minutes
+     	GENERATE group,
+               COUNT(df) AS total_records,
+               COUNT(only_delays) AS num_delays,
+               (float)COUNT(only_delays)/(float)COUNT(df) AS percentage; -- need a float, since we are doing division
 }
 
--- sort for output
-only_fractions = FOREACH COUNT_TOTAL GENERATE group, cr_frac;
-order_fractions_carrier_delay = ORDER only_fractions BY cr_frac ASC;
+-- pull out only the data we need
+only_pct= FOREACH delay_counts
+          GENERATE group, percentage;
+
+order_pct_carriers = ORDER only_pct
+                     BY percentage ASC;
 ---------------- END CARRIER DELAYS -----------------------
-/* results
-(UniqueCarrier,0.0)
-(AQ,0.035612583)
-(DH,0.035665095)
-(WN,0.03652036)
-(TZ,0.03875312)
-(FL,0.041693114)
-(HA,0.043094564)
-(XE,0.04340171)
-(F9,0.04765579)
-(CO,0.04786357)
-(B6,0.04886883)
-(HP,0.052766446)
-(DL,0.05313382)
-(9E,0.05788404)
-(MQ,0.060964167)
-(US,0.06151146)
-(UA,0.06319585)
-(AA,0.063971005)
-(AS,0.0790517)
-(NW,0.08073263)
-(OH,0.08766261)
-(OO,0.09314518)
-(YV,0.10662182)
-*/
+
+
 
 ----- Get the Ratio of carrierDelay / arrival_delay -----
 arrival_and_carrier_delays = JOIN
-                            order_fractions_arrival_delay BY group,
-                            order_fractions_carrier_delay BY group;
+                            order_pct_arrivals BY group,
+                            order_pct_carriers BY group;
 ----------------------------------------------------------
 /* results
 (9E,0.18889607,9E,0.05788404)
@@ -153,8 +154,15 @@ arrival_and_carrier_delays = JOIN
 
 
 --------- FINAL OUTPUT ---------
-fractions = FOREACH arrival_and_carrier_delays
-            GENERATE $0 as label, $3/$1 as delay_pct;
+pcts = FOREACH arrival_and_carrier_delays
+       GENERATE $0 as label,
+                $3/$1 as delay_pct;
+
+pct_ordered = ORDER pcts
+              BY delay_pct ASC;
+
+
+dump pct_ordered
 
 /* results
 (9E,0.30643326)
