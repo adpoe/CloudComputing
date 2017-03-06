@@ -48,8 +48,6 @@ delay_counts = FOREACH grp_car {
      	only_delays = FILTER df
                     BY (delay >= 15);
      	GENERATE group,
-               COUNT(df) AS total_records,
-               COUNT(only_delays) AS num_delays,
                (float)COUNT(only_delays)/(float)COUNT(df) AS percentage; -- need a float, since we are doing division
 }
 
