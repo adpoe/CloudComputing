@@ -37,7 +37,6 @@ Time taken: 4.839 seconds, Fetched: 20 row(s)
 
 do older planes have more delays?  --> not necessarily.
 -------------------------------------------------------
-""" Results    
 1965	12.0  
 2006	11.811881188118813  
 1997	10.83739837398374  
@@ -88,7 +87,7 @@ NULL	9.913555992141454
 1972	5.0  
 0	4.0  
 1957	2.0  
-"""
+Time taken: 6.399 seconds, Fetched: 50 row(s)  
 
  Thanks for your time,
   Tony
