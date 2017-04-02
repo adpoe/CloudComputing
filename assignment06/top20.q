@@ -4,10 +4,16 @@ CREATE TABLE flight_counts(
     count INT);
 
 -- group by origin airport code
-INSERT INTO flight_counts SELECT origin, count(origin) from flight_data GROUP BY origin;
+INSERT INTO flight_counts
+SELECT origin, count(origin)
+from flight_data
+GROUP BY origin;
 
 -- group by destination airport code
-INSERT INTO flight_counts SELECT dest, count(dest) from flight_data GROUP BY dest;
+INSERT INTO flight_counts
+SELECT dest, count(dest)
+from flight_data
+GROUP BY dest;
 
 
 -- get the totals from our new flight counts table
@@ -15,7 +21,10 @@ CREATE TABLE total_flight_counts(
    airport STRING,
    total INT);
 
-INSERT INTO total_flight_counts SELECT ariport, sum(count) from flight_counts GROUP BY ariport;
+INSERT INTO total_flight_counts
+SELECT ariport, sum(count)
+from flight_counts
+GROUP BY ariport;
 
 """ Results
 ATL	1676278 --> Atlanta
