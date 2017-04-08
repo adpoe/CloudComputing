@@ -1,0 +1,80 @@
+scala> val solution = flatPairsRDD.groupBy(_._1).map(l => (l._1, l._2.map(_._2)))
+solution: org.apache.spark.rdd.RDD[((Int, Int), Iterable[List[Int]])] = MapPartitionsRDD[26] at map at <console>:27
+
+scala> solution.collect()
+17/04/08 20:01:11 INFO SparkContext: Starting job: collect at <console>:30
+17/04/08 20:01:11 INFO DAGScheduler: Registering RDD 24 (groupBy at <console>:27)
+17/04/08 20:01:11 INFO DAGScheduler: Got job 12 (collect at <console>:30) with 4 output partitions
+17/04/08 20:01:11 INFO DAGScheduler: Final stage: ResultStage 17(collect at <console>:30)
+17/04/08 20:01:11 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 16)
+17/04/08 20:01:11 INFO DAGScheduler: Missing parents: List(ShuffleMapStage 16)
+17/04/08 20:01:11 INFO DAGScheduler: Submitting ShuffleMapStage 16 (MapPartitionsRDD[24] at groupBy at <console>:27), which has no missing parents
+17/04/08 20:01:11 INFO MemoryStore: ensureFreeSpace(3488) called with curMem=11524, maxMem=278019440
+17/04/08 20:01:11 INFO MemoryStore: Block broadcast_16 stored as values in memory (estimated size 3.4 KB, free 265.1 MB)
+17/04/08 20:01:11 INFO MemoryStore: ensureFreeSpace(1807) called with curMem=15012, maxMem=278019440
+17/04/08 20:01:11 INFO MemoryStore: Block broadcast_16_piece0 stored as bytes in memory (estimated size 1807.0 B, free 265.1 MB)
+17/04/08 20:01:11 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on localhost:48612 (size: 1807.0 B, free: 265.1 MB)
+17/04/08 20:01:11 INFO SparkContext: Created broadcast 16 from broadcast at DAGScheduler.scala:861
+17/04/08 20:01:11 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 16 (MapPartitionsRDD[24] at groupBy at <console>:27)
+17/04/08 20:01:11 INFO TaskSchedulerImpl: Adding task set 16.0 with 4 tasks
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 0.0 in stage 16.0 (TID 61, localhost, PROCESS_LOCAL, 2233 bytes)
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 1.0 in stage 16.0 (TID 62, localhost, PROCESS_LOCAL, 2276 bytes)
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 2.0 in stage 16.0 (TID 63, localhost, PROCESS_LOCAL, 2213 bytes)
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 3.0 in stage 16.0 (TID 64, localhost, PROCESS_LOCAL, 2236 bytes)
+17/04/08 20:01:11 INFO Executor: Running task 0.0 in stage 16.0 (TID 61)
+17/04/08 20:01:11 INFO Executor: Finished task 0.0 in stage 16.0 (TID 61). 1161 bytes result sent to driver
+17/04/08 20:01:11 INFO Executor: Running task 1.0 in stage 16.0 (TID 62)
+17/04/08 20:01:11 INFO Executor: Finished task 1.0 in stage 16.0 (TID 62). 1161 bytes result sent to driver
+17/04/08 20:01:11 INFO Executor: Running task 3.0 in stage 16.0 (TID 64)
+17/04/08 20:01:11 INFO Executor: Running task 2.0 in stage 16.0 (TID 63)
+17/04/08 20:01:11 INFO Executor: Finished task 3.0 in stage 16.0 (TID 64). 1161 bytes result sent to driver
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 0.0 in stage 16.0 (TID 61) in 11 ms on localhost (1/4)
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 1.0 in stage 16.0 (TID 62) in 11 ms on localhost (2/4)
+17/04/08 20:01:11 INFO Executor: Finished task 2.0 in stage 16.0 (TID 63). 1161 bytes result sent to driver
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 3.0 in stage 16.0 (TID 64) in 22 ms on localhost (3/4)
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 2.0 in stage 16.0 (TID 63) in 23 ms on localhost (4/4)
+17/04/08 20:01:11 INFO TaskSchedulerImpl: Removed TaskSet 16.0, whose tasks have all completed, from pool
+17/04/08 20:01:11 INFO DAGScheduler: ShuffleMapStage 16 (groupBy at <console>:27) finished in 0.025 s
+17/04/08 20:01:11 INFO DAGScheduler: looking for newly runnable stages
+17/04/08 20:01:11 INFO DAGScheduler: running: Set()
+17/04/08 20:01:11 INFO DAGScheduler: waiting: Set(ResultStage 17)
+17/04/08 20:01:11 INFO DAGScheduler: failed: Set()
+17/04/08 20:01:11 INFO DAGScheduler: Missing parents for ResultStage 17: List()
+17/04/08 20:01:11 INFO DAGScheduler: Submitting ResultStage 17 (MapPartitionsRDD[26] at map at <console>:27), which is now runnable
+17/04/08 20:01:11 INFO MemoryStore: ensureFreeSpace(4160) called with curMem=16819, maxMem=278019440
+17/04/08 20:01:11 INFO MemoryStore: Block broadcast_17 stored as values in memory (estimated size 4.1 KB, free 265.1 MB)
+17/04/08 20:01:11 INFO MemoryStore: ensureFreeSpace(2060) called with curMem=20979, maxMem=278019440
+17/04/08 20:01:11 INFO MemoryStore: Block broadcast_17_piece0 stored as bytes in memory (estimated size 2.0 KB, free 265.1 MB)
+17/04/08 20:01:11 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on localhost:48612 (size: 2.0 KB, free: 265.1 MB)
+17/04/08 20:01:11 INFO SparkContext: Created broadcast 17 from broadcast at DAGScheduler.scala:861
+17/04/08 20:01:11 INFO DAGScheduler: Submitting 4 missing tasks from ResultStage 17 (MapPartitionsRDD[26] at map at <console>:27)
+17/04/08 20:01:11 INFO TaskSchedulerImpl: Adding task set 17.0 with 4 tasks
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 0.0 in stage 17.0 (TID 65, localhost, PROCESS_LOCAL, 1901 bytes)
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 1.0 in stage 17.0 (TID 66, localhost, PROCESS_LOCAL, 1901 bytes)
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 2.0 in stage 17.0 (TID 67, localhost, PROCESS_LOCAL, 1901 bytes)
+17/04/08 20:01:11 INFO TaskSetManager: Starting task 3.0 in stage 17.0 (TID 68, localhost, PROCESS_LOCAL, 1901 bytes)
+17/04/08 20:01:11 INFO Executor: Running task 0.0 in stage 17.0 (TID 65)
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+17/04/08 20:01:11 INFO Executor: Running task 1.0 in stage 17.0 (TID 66)
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 1 ms
+17/04/08 20:01:11 INFO Executor: Finished task 0.0 in stage 17.0 (TID 65). 1795 bytes result sent to driver
+17/04/08 20:01:11 INFO Executor: Finished task 1.0 in stage 17.0 (TID 66). 1775 bytes result sent to driver
+17/04/08 20:01:11 INFO Executor: Running task 2.0 in stage 17.0 (TID 67)
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+17/04/08 20:01:11 INFO Executor: Finished task 2.0 in stage 17.0 (TID 67). 2059 bytes result sent to driver
+17/04/08 20:01:11 INFO Executor: Running task 3.0 in stage 17.0 (TID 68)
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 0.0 in stage 17.0 (TID 65) in 12 ms on localhost (1/4)
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+17/04/08 20:01:11 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+17/04/08 20:01:11 INFO Executor: Finished task 3.0 in stage 17.0 (TID 68). 1856 bytes result sent to driver
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 1.0 in stage 17.0 (TID 66) in 13 ms on localhost (2/4)
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 2.0 in stage 17.0 (TID 67) in 14 ms on localhost (3/4)
+17/04/08 20:01:11 INFO TaskSetManager: Finished task 3.0 in stage 17.0 (TID 68) in 19 ms on localhost (4/4)
+17/04/08 20:01:11 INFO TaskSchedulerImpl: Removed TaskSet 17.0, whose tasks have all completed, from pool
+17/04/08 20:01:11 INFO DAGScheduler: ResultStage 17 (collect at <console>:30) finished in 0.023 s
+17/04/08 20:01:11 INFO DAGScheduler: Job 12 finished: collect at <console>:30, took 0.085143 s
+
+res18: Array[((Int, Int), Iterable[List[Int]])] = Array(((400,300),List(List(100, 200, 300))), ((100,500),List(List(200, 300, 400, 500, 600))), ((200,400),List(List(100, 300, 400))), ((400,100),List(List(100, 200, 300))), ((300,500),List(List(100, 200, 400, 500))), ((500,300),List(List(100, 300))), ((300,400),List(List(100, 200, 400, 500))), ((100,200),List(List(200, 300, 400, 500, 600))), ((200,300),List(List(100, 300, 400))), ((100,600),List(List(200, 300, 400, 500, 600))), ((400,200),List(List(100, 200, 300))), ((100,400),List(List(200, 300, 400, 500, 600))), ((500,100),List(List(100, 300))), ((300,200),List(List(100, 200, 400, 500))), ((300,100),List(List(100, 200, 400, 500))), ((100,300),List(List(200, 300, 400, 500, 600))), ((200,100),List(List(100, 300, 400))), ((600,100),List(Li...

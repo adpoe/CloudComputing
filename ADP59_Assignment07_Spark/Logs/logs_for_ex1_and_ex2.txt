@@ -1,0 +1,109 @@
+17/04/08 19:08:50 INFO metastore: Connected to metastore.
+17/04/08 19:09:02 WARN DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.
+17/04/08 19:09:03 INFO SessionState: Created local directory: /tmp/3ee12f00-d512-4b18-a9f4-93a1964ed42a_resources
+17/04/08 19:09:03 INFO SessionState: Created HDFS directory: /tmp/hive/admin3428/3ee12f00-d512-4b18-a9f4-93a1964ed42a
+17/04/08 19:09:03 INFO SessionState: Created local directory: /tmp/admin3428/3ee12f00-d512-4b18-a9f4-93a1964ed42a
+17/04/08 19:09:03 INFO SessionState: Created HDFS directory: /tmp/hive/admin3428/3ee12f00-d512-4b18-a9f4-93a1964ed42a/_tmp_space.db
+17/04/08 19:09:03 INFO SparkILoop: Created sql context (with Hive support)..
+SQL context available as sqlContext.
+
+scala> val r = scala.util.Random
+r: util.Random.type = scala.util.Random$@7c9015c6
+
+scala> val idx = 1 to 100
+idx: scala.collection.immutable.Range.Inclusive = Range(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100)
+
+scala> val myrdd = sc.parallelize(idx.map(i => (i, r.nextInt(100))))
+myrdd: org.apache.spark.rdd.RDD[(Int, Int)] = ParallelCollectionRDD[0] at parallelize at <console>:25
+
+scala> myrdd.sortBy(_._2, false).take(10)
+17/04/08 19:15:57 INFO SparkContext: Starting job: sortBy at <console>:28
+17/04/08 19:15:57 INFO DAGScheduler: Got job 0 (sortBy at <console>:28) with 4 output partitions
+17/04/08 19:15:57 INFO DAGScheduler: Final stage: ResultStage 0(sortBy at <console>:28)
+17/04/08 19:15:57 INFO DAGScheduler: Parents of final stage: List()
+17/04/08 19:15:58 INFO DAGScheduler: Missing parents: List()
+17/04/08 19:15:58 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[3] at sortBy at <console>:28), which has no missing parents
+17/04/08 19:15:58 INFO MemoryStore: ensureFreeSpace(2624) called with curMem=0, maxMem=278019440
+17/04/08 19:15:58 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 2.6 KB, free 265.1 MB)
+17/04/08 19:15:58 INFO MemoryStore: ensureFreeSpace(1543) called with curMem=2624, maxMem=278019440
+17/04/08 19:15:58 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 1543.0 B, free 265.1 MB)
+17/04/08 19:15:58 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:48612 (size: 1543.0 B, free: 265.1 MB)
+17/04/08 19:15:58 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:861
+17/04/08 19:15:58 INFO DAGScheduler: Submitting 4 missing tasks from ResultStage 0 (MapPartitionsRDD[3] at sortBy at <console>:28)
+17/04/08 19:15:58 INFO TaskSchedulerImpl: Adding task set 0.0 with 4 tasks
+17/04/08 19:15:58 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, PROCESS_LOCAL, 2585 bytes)
+17/04/08 19:15:58 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, PROCESS_LOCAL, 2585 bytes)
+17/04/08 19:15:58 INFO TaskSetManager: Starting task 2.0 in stage 0.0 (TID 2, localhost, PROCESS_LOCAL, 2585 bytes)
+17/04/08 19:15:58 INFO TaskSetManager: Starting task 3.0 in stage 0.0 (TID 3, localhost, PROCESS_LOCAL, 2585 bytes)
+17/04/08 19:15:58 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+17/04/08 19:15:58 INFO Executor: Running task 1.0 in stage 0.0 (TID 1)
+17/04/08 19:15:58 INFO Executor: Running task 2.0 in stage 0.0 (TID 2)
+17/04/08 19:15:58 INFO Executor: Running task 3.0 in stage 0.0 (TID 3)
+17/04/08 19:15:58 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 1199 bytes result sent to driver
+17/04/08 19:15:58 INFO Executor: Finished task 1.0 in stage 0.0 (TID 1). 1199 bytes result sent to driver
+17/04/08 19:15:58 INFO Executor: Finished task 2.0 in stage 0.0 (TID 2). 1199 bytes result sent to driver
+17/04/08 19:15:58 INFO Executor: Finished task 3.0 in stage 0.0 (TID 3). 1199 bytes result sent to driver
+17/04/08 19:15:58 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 353 ms on localhost (1/4)
+17/04/08 19:15:58 INFO TaskSetManager: Finished task 2.0 in stage 0.0 (TID 2) in 293 ms on localhost (2/4)
+17/04/08 19:15:58 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 304 ms on localhost (3/4)
+17/04/08 19:15:58 INFO TaskSetManager: Finished task 3.0 in stage 0.0 (TID 3) in 292 ms on localhost (4/4)
+17/04/08 19:15:58 INFO DAGScheduler: ResultStage 0 (sortBy at <console>:28) finished in 0.383 s
+17/04/08 19:15:58 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool
+17/04/08 19:15:58 INFO DAGScheduler: Job 0 finished: sortBy at <console>:28, took 0.933604 s
+17/04/08 19:15:58 INFO SparkContext: Starting job: take at <console>:28
+17/04/08 19:15:59 INFO DAGScheduler: Registering RDD 1 (sortBy at <console>:28)
+17/04/08 19:15:59 INFO DAGScheduler: Got job 1 (take at <console>:28) with 1 output partitions
+17/04/08 19:15:59 INFO DAGScheduler: Final stage: ResultStage 2(take at <console>:28)
+17/04/08 19:15:59 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 1)
+17/04/08 19:15:59 INFO DAGScheduler: Missing parents: List(ShuffleMapStage 1)
+17/04/08 19:15:59 INFO DAGScheduler: Submitting ShuffleMapStage 1 (MapPartitionsRDD[1] at sortBy at <console>:28), which has no missing parents
+17/04/08 19:15:59 INFO MemoryStore: ensureFreeSpace(2960) called with curMem=4167, maxMem=278019440
+17/04/08 19:15:59 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 2.9 KB, free 265.1 MB)
+17/04/08 19:15:59 INFO MemoryStore: ensureFreeSpace(1750) called with curMem=7127, maxMem=278019440
+17/04/08 19:15:59 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 1750.0 B, free 265.1 MB)
+17/04/08 19:15:59 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on localhost:48612 (size: 1750.0 B, free: 265.1 MB)
+17/04/08 19:15:59 INFO SparkContext: Created broadcast 1 from broadcast at DAGScheduler.scala:861
+17/04/08 19:15:59 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 1 (MapPartitionsRDD[1] at sortBy at <console>:28)
+17/04/08 19:15:59 INFO TaskSchedulerImpl: Adding task set 1.0 with 4 tasks
+17/04/08 19:15:59 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 4, localhost, PROCESS_LOCAL, 2574 bytes)
+17/04/08 19:15:59 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 5, localhost, PROCESS_LOCAL, 2574 bytes)
+17/04/08 19:15:59 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 6, localhost, PROCESS_LOCAL, 2574 bytes)
+17/04/08 19:15:59 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 7, localhost, PROCESS_LOCAL, 2574 bytes)
+17/04/08 19:15:59 INFO Executor: Running task 1.0 in stage 1.0 (TID 5)
+17/04/08 19:15:59 INFO Executor: Running task 0.0 in stage 1.0 (TID 4)
+17/04/08 19:15:59 INFO Executor: Running task 2.0 in stage 1.0 (TID 6)
+17/04/08 19:15:59 INFO Executor: Running task 3.0 in stage 1.0 (TID 7)
+17/04/08 19:15:59 INFO Executor: Finished task 3.0 in stage 1.0 (TID 7). 1161 bytes result sent to driver
+17/04/08 19:15:59 INFO Executor: Finished task 1.0 in stage 1.0 (TID 5). 1161 bytes result sent to driver
+17/04/08 19:15:59 INFO Executor: Finished task 2.0 in stage 1.0 (TID 6). 1161 bytes result sent to driver
+17/04/08 19:15:59 INFO Executor: Finished task 0.0 in stage 1.0 (TID 4). 1161 bytes result sent to driver
+17/04/08 19:15:59 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 7) in 170 ms on localhost (1/4)
+17/04/08 19:15:59 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 5) in 171 ms on localhost (2/4)
+17/04/08 19:15:59 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 6) in 171 ms on localhost (3/4)
+17/04/08 19:15:59 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 4) in 175 ms on localhost (4/4)
+17/04/08 19:15:59 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool
+17/04/08 19:15:59 INFO DAGScheduler: ShuffleMapStage 1 (sortBy at <console>:28) finished in 0.185 s
+17/04/08 19:15:59 INFO DAGScheduler: looking for newly runnable stages
+17/04/08 19:15:59 INFO DAGScheduler: running: Set()
+17/04/08 19:15:59 INFO DAGScheduler: waiting: Set(ResultStage 2)
+17/04/08 19:15:59 INFO DAGScheduler: failed: Set()
+17/04/08 19:15:59 INFO DAGScheduler: Missing parents for ResultStage 2: List()
+17/04/08 19:15:59 INFO DAGScheduler: Submitting ResultStage 2 (MapPartitionsRDD[5] at sortBy at <console>:28), which is now runnable
+17/04/08 19:15:59 INFO MemoryStore: ensureFreeSpace(3080) called with curMem=8877, maxMem=278019440
+17/04/08 19:15:59 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 3.0 KB, free 265.1 MB)
+17/04/08 19:15:59 INFO MemoryStore: ensureFreeSpace(1799) called with curMem=11957, maxMem=278019440
+17/04/08 19:15:59 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 1799.0 B, free 265.1 MB)
+17/04/08 19:15:59 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on localhost:48612 (size: 1799.0 B, free: 265.1 MB)
+17/04/08 19:15:59 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:861
+17/04/08 19:15:59 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 2 (MapPartitionsRDD[5] at sortBy at <console>:28)
+17/04/08 19:15:59 INFO TaskSchedulerImpl: Adding task set 2.0 with 1 tasks
+17/04/08 19:15:59 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 8, localhost, PROCESS_LOCAL, 1901 bytes)
+17/04/08 19:15:59 INFO Executor: Running task 0.0 in stage 2.0 (TID 8)
+17/04/08 19:15:59 INFO ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+17/04/08 19:15:59 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 9 ms
+17/04/08 19:15:59 INFO Executor: Finished task 0.0 in stage 2.0 (TID 8). 1442 bytes result sent to driver
+17/04/08 19:15:59 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 8) in 131 ms on localhost (1/1)
+17/04/08 19:15:59 INFO TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool
+17/04/08 19:15:59 INFO DAGScheduler: ResultStage 2 (take at <console>:28) finished in 0.132 s
+17/04/08 19:15:59 INFO DAGScheduler: Job 1 finished: take at <console>:28, took 0.383311 s
+res0: Array[(Int, Int)] = Array((81,99), (87,98), (90,98), (33,97), (55,97), (22,95), (31,95), (43,95), (67,95), (61,93))
